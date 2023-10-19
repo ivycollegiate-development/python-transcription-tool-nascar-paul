@@ -9,17 +9,17 @@ def get_transcript(video_id):
     transcript = YouTubeTranscriptApi.get_transcript(video_id)
     return transcript
 
+# Adding options for alternative languages
 # Defines a function to write the transcript to a file
 def write_transcript_to_file(video_id, transcript):
     # Open a text file with the same name as the video_id
     # The 'w' argument means that the file will be opened for writing
-
-    with open(f'{video_id}.txt', 'w') as file:
+    with open(f"{video_id}.transcript.txt", "w", encoding="utf-8") as file:
         # Iterate over each entry in the transcript
         for entry in transcript:
-            # Write the text of the entry to the file, followed by a newline character
-            # The 'text' key of each entry contains the actual text of the transcript
-            file.write(entry['text'] + '\n')
+            # Write the start time, end time, and duration of the entry to the file, followed by a newline character
+            # The 'start', 'start' + 'duration', and 'duration' keys of each entry contain the timing information of the transcript
+            file.write(f"{entry['start']} - {entry['start'] + entry['duration']}: {entry['text']}\n")
 
 # Set the ID of the video you want to get the transcript for
 video_id = input("Enter the YouTube video ID: ")
